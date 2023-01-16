@@ -1,0 +1,20 @@
+        --Страница «Заказчики» (customers_page)
+
+SELECT COUNT(*)
+FROM orders
+--Посчитать количество заказчиков
+
+SELECT DISTINCT city, country
+FROM customers
+--Выбрать все уникальные сочетания городов и стран, в которых "зарегестрированы" заказчики
+
+select customers.company_name, concat(employees.last_name,' ', employees.first_name) as FIO from orders
+join customers ON  customers.customer_id = orders.customer_id and customers.city = 'London'
+join shippers ON  shippers.shipper_id = orders.ship_via and shippers.company_name = 'Speedy Express'
+join employees ON  employees.employee_id = orders.employee_id and employees.city = 'London'
+--Найти заказчиков и обслуживающих их заказы сотрудников, таких, что и заказчики и сотрудники из города London, а доставка идёт компанией Speedy Express. Вывести компанию заказчика и ФИО сотрудника.
+
+select customers.contact_name, orders.order_id from customers
+left join orders On customers.customer_id = orders.customer_id
+where orders.order_id IS NULL
+-- Найти заказчиков, не сделавших ни одного заказа. Вывести имя заказчика и order_id.

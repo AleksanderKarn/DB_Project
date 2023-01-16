@@ -1,0 +1,9 @@
+   --Страница «Товары» (products_page)
+
+
+SELECT products.product_name , products.units_in_stock, split_part(suppliers.contact, ' ', 1) as supplier_name, suppliers.phone
+FROM categories 
+left join products ON categories.category_id=products.category_id AND products.units_in_stock < 20
+left join suppliers ON products.supplier_id=suppliers.id
+where categories.category_name=ANY ('{Beverages, Seafood}')
+-- Найти активные (см. поле discontinued) продукты из категории Beverages и Seafood, которых в продаже менее 20 единиц. Вывести наименование продуктов, кол-во единиц в продаже, имя контакта поставщика и его телефонный номер.
